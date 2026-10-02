@@ -1,0 +1,26 @@
+[
+  {
+    "id": "item-101",
+    "title": "SUPER SLIM CASE 100% UNBEATABLE PROTECTION EVER",
+    "description": "This phone case is the world's best miracle cure for drops. Guaranteed to never break under any pressure.",
+    "category": "Electronics",
+    "price": "19.99",
+    "seller": "Apex Gadgets"
+  },
+  {
+    "id": "item-102",
+    "title": "Short mug",
+    "description": "Nice ceramic mug for tea.",
+    "category": "Home & Kitchen",
+    "price": "-5.00",
+    "seller": "Pottery Barn"
+  },
+  {
+    "id": "item-103",
+    "title": "Wireless Bluetooth Earbuds Pro",
+    "description": "Ergonomic in-ear Bluetooth 5.3 earphones with 30-hour playback, USB-C fast charging, and IPX5 sweat resistance.",
+    "category": "Electronics",
+    "price": "49.50",
+    "seller": "SoundWave Ltd"
+  }
+]
