@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-const API_BASE="http://localhost:5000/api";
+const API_BASE=import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 
 export const fetchHistory=createAsyncThunk("review/fetchHistory", async ()=>{
   const res=await fetch(`${API_BASE}/history`);
@@ -10,9 +10,9 @@ export const fetchHistory=createAsyncThunk("review/fetchHistory", async ()=>{
 
 export const submitReview=createAsyncThunk("review/submitReview", async (listingData)=>{
   const res=await fetch(`${API_BASE}/review`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(listingData)
+    method:"POST",
+    headers:{ "Content-Type": "application/json" },
+    body:JSON.stringify(listingData)
   });
   const json=await res.json();
   return json.data;
@@ -46,16 +46,16 @@ const reviewSlice=createSlice({
     error: null
   },
   reducers: {
-    setActiveReview: (state, action)=>{
+    setActiveReview:(state,action)=>{
       state.activeReview=action.payload;
     },
-    clearActiveReview: (state)=>{
+    clearActiveReview:(state)=>{
       state.activeReview=null;
     },
-    updateActiveFieldDecision: (state, action)=>{
-      const { field, decision, value }=action.payload;
-      if(!state.activeReview) return;
-
+    updateActiveFieldDecision:(state,action)=>{
+      const { field,decision,value }=action.payload;
+      if(!state.activeReview) 
+        return;
       state.activeReview.fieldDecisions[field]=decision;
       if(decision==="rejected"){
         state.activeReview.revised[field]=state.activeReview.original[field];
@@ -64,28 +64,28 @@ const reviewSlice=createSlice({
       }
     }
   },
-  extraReducers: (builder)=>{
+  extraReducers:(builder)=>{
     builder
-      .addCase(fetchHistory.fulfilled, (state, action)=>{
+      .addCase(fetchHistory.fulfilled,(state,action)=>{
         state.history=action.payload;
       })
       .addCase(submitReview.pending, (state)=>{
         state.isProcessing=true;
         state.error=null;
       })
-      .addCase(submitReview.fulfilled, (state, action)=>{
+      .addCase(submitReview.fulfilled,(state,action)=>{
         state.isProcessing=false;
         state.activeReview=action.payload;
         state.history.unshift(action.payload);
       })
-      .addCase(submitReview.rejected, (state, action)=>{
+      .addCase(submitReview.rejected,(state,action)=>{
         state.isProcessing=false;
         state.error=action.error.message;
       })
-      .addCase(processBatch.pending, (state)=>{
+      .addCase(processBatch.pending,(state)=>{
         state.isProcessing=true;
       })
-      .addCase(processBatch.fulfilled, (state, action)=>{
+      .addCase(processBatch.fulfilled,(state,action)=>{
         state.isProcessing=false;
         state.history=[...action.payload, ...state.history];
         if(action.payload.length>0){
@@ -100,5 +100,5 @@ const reviewSlice=createSlice({
   }
 });
 
-export const { setActiveReview, clearActiveReview, updateActiveFieldDecision }=reviewSlice.actions;
+export const { setActiveReview,clearActiveReview,updateActiveFieldDecision }=reviewSlice.actions;
 export default reviewSlice.reducer;
