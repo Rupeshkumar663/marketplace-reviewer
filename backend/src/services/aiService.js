@@ -92,7 +92,7 @@ Respond ONLY with a valid JSON object matching this schema:
         Authorization: `Bearer ${apiKey.trim()}`
       },
       body: JSON.stringify({
-        model: "llama-3.3-70b-versatile",
+        model: "llama-3.1-8b-instant",
         messages: [
           { role: "system", content: "You must return valid raw JSON only." },
           { role: "user", content: prompt }
@@ -114,7 +114,7 @@ Respond ONLY with a valid JSON object matching this schema:
     return {
       issues: (parsed.issues || []).map((i) => ({ ...i, isDeterministic: false })),
       revised: { ...listing, ...parsed.revised },
-      source: "llama-3.3-70b-versatile"
+      source: "llama-3.1-8b-instant"
     };
   } catch (err) {
     console.error("AI service error:", err.message);
